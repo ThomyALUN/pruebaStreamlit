@@ -1,5 +1,8 @@
 import streamlit as st
-import pandas as pd
+
+st.set_page_config(page_title="Brahian es gay")
+
+st.title("Formulario")
 
 carreras=[" ","Electrónica", "Eléctrica", "ASI", "Civil"]
 matriculas=[""]+[str(i+1) for i in range(10)]
