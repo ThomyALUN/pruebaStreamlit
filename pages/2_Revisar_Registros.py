@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+from os import remove
 
 st.set_page_config(
     page_title="Registros: Encuesta",
@@ -18,4 +19,10 @@ if st.button("Ver registros"):
         datos=pd.read_csv("estado.csv")
         st.dataframe(datos)
     except FileNotFoundError:
-        st.warning("Aún no se han realizado registros.")
+        st.warning("Aún no se han realizado registros",icon="⚠️")
+
+if st.button("Borrar todos los registros"):
+    try:
+        remove("estado.csv")
+    except:
+        st.warning("No hay registros por borrar",icon="⚠️")
