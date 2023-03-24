@@ -7,7 +7,6 @@ carreras=["---", "Administración de Empresas", "Administración de Sistemas Inf
             "Ingeniería Electrónica", "Ingeniería Física", "Ingeniería Industrial", "Ingeniería Química",
             "Matemáticas"
             ]
-matriculas=["---"]+[str(i+1) for i in range(10)]
 
 
 st.set_page_config(
@@ -45,20 +44,19 @@ carreraSelec = st.selectbox(
     carreras,
     key="carrera")
 
-matricSelec = st.selectbox(
-    '¿Cuántas matrículas llevas?',
-    matriculas,
-    key="matricula")
+matricSelec=st.number_input(label="¿Cuántas matrículas llevas?", format="%d", min_value=0, max_value=20)
 
 # any() funciona como un OR múltiple
-if any([ not nombre, not correoValido, not edad, carreraSelec==carreras[0], matricSelec==matriculas[0] ]):
+if any([ not nombre, not correoValido, not edad, carreraSelec==carreras[0], not matricSelec ]):
     datosIngresados=False
 else:
     datosIngresados=True
 
 if st.button("Enviar"):
     if datosIngresados:
-        st.write("Tú estudias ", carreraSelec, " y llevas ", matricSelec, " matrículas en la universidad")
-        escribirDatos(nombre, correo, edad, carreraSelec, matricSelec)
+        if escribirDatos(nombre, correo, edad, carreraSelec, matricSelec):
+            st.info((f"Estimad@ {nombre}, tienes {edad} años." +
+                    f" Actualmente estudias {carreraSelec} y llevas {matricSelec} matrículas al interior de la universidad." +
+                    f" Tu correo de contacto institucional es {correo}"))
     else:
         st.warning('Aún no has ingresado completamente tus datos', icon="ℹ️")
